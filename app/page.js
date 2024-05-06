@@ -1,11 +1,9 @@
 import classNames from "classnames/bind";
-import Heading from "../components/Heading";
-import Paragraph from "../components/Paragraph";
 
 const Home = () => {
   return (
     <main>
-      <Heading level={1}>Spotify</Heading>
+      {/* <Heading level={1}>Spotify</Heading>
 
       <Heading level={2} marginBottom>
         Artists
@@ -39,7 +37,7 @@ const Home = () => {
         accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
         illo inventore veritatis et quasi architecto beatae vitae dicta sunt
         explicabo. voluptas nulla
-      </Paragraph>
+      </Paragraph> */}
     </main>
   );
 };
