@@ -1,44 +1,37 @@
-import classNames from "classnames/bind";
+"use client";
 
-const Home = () => {
+import { useEffect, useState } from "react";
+
+const HomePage = () => {
+  const [artists, setArtists] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    try {
+      fetch("/api/artists")
+        .then((res) => res.json())
+        .then((data) => {
+          setArtists(data.artists);
+          setIsLoading(false);
+        });
+    } catch (error) {
+      setError(error);
+    }
+  }, []);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error loading artists</p>;
+
+  console.log({ artists });
+
   return (
-    <main>
-      {/* <Heading level={1}>Spotify</Heading>
-
-      <Heading level={2} marginBottom>
-        Artists
-      </Heading>
-
-      <Heading level={3}>Songs</Heading>
-
-      <Paragraph intro>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. voluptas nulla
-      </Paragraph>
-
-      <Paragraph marginBottom={1}>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. voluptas nulla
-      </Paragraph>
-
-      <Paragraph marginBottom={5}>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. voluptas nulla
-      </Paragraph>
-
-      <Paragraph caption>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. voluptas nulla
-      </Paragraph> */}
-    </main>
+    <div>
+      {artists.map((artist) => {
+        return <h1 key={artist.id}>{artist.name}</h1>;
+      })}
+    </div>
   );
 };
-export default Home;
+
+export default HomePage;
