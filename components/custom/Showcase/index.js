@@ -1,7 +1,6 @@
-import Col from "../../layout/Col";
-import Container from "../../layout/Container";
-import Row from "../../layout/Row";
-
+import Col from "../../layout/Col/Col";
+import Container from "../../layout/Container/Container";
+import Row from "../../layout/Row/Row";
 import styles from "./Showcase.module.scss";
 
 const Showcase = () => {
