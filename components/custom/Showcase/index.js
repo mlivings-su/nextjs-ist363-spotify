@@ -1,119 +1,50 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 
-import Col from "../../layout/Col/Col";
-import Container from "../../layout/Container/Container";
-import Image from "next/image";
-import Row from "../../layout/Row/Row";
+import { AnimatePresence } from "framer-motion";
+
+import ShowcaseContent from "./Content";
+import ShowcaseImages from "./images";
+
 import styles from "./Showcase.module.scss";
+import { faItunesNote } from "@fortawesome/free-brands-svg-icons";
 
 const Showcase = ({ items }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const headlineVariants = {
-    initial: { opacity: 0, x: -100 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: 100 },
-  };
+  const [albums, SetAlbums] = useState({});
+  const [isExpanded, setIsExpanded] = useState(false);
 
-  const numberVariants = {
-    initial: { opacity: 0, y: -100 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: 100 },
-  };
+  useEffect(() => {
+    if (items.length > 0) {
+      try {
+        // console.log("useeffect for showcase");
+        fetch(`/api/albums?id=${items[activeIndex].id}`)
+          .then((res) => res.json())
+          .then((data) => {
+            SetAlbums(data.items);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [activeIndex]);
+
   return (
     <div className={styles.showcase}>
       <AnimatePresence>
-        <div className={styles.showcase__images}>
-          <ul
-            className={styles.showcase__images__list}
-            style={{
-              width: `${items.length * 100}%`,
-              transform: `translateX(-${(activeIndex / items.length) * 100}%)`,
-            }}
-          >
-            {items.map((item, index) => {
-              return (
-                <li className={styles.showcase__images__list__item} key={index}>
-                  <Image
-                    src={item.images[0].url}
-                    alt={item.name}
-                    width={item.images[0].width}
-                    height={item.images[0].height}
-                    className={styles.showcase__images____list__item__image}
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className={styles.showcase__content}>
-          <Container>
-            <Row alignItems="flex-end">
-              <Col md={1}>
-                <span className={styles.showcase__counter}>
-                  {activeIndex + 1}/{items.length}
-                </span>
-              </Col>
-              <Col xs={3} md={5}>
-                <motion.div
-                  variants={numberVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  key={`number=${activeIndex}`}
-                >
-                  <span className={styles.showcase__number}>
-                    {activeIndex + 1}
-                  </span>
-                </motion.div>
-              </Col>
+        <ShowcaseImages
+          items={items}
+          activeIndex={activeIndex}
+          isExpanded={isExpanded}
+        />
 
-              <Col xs={9} md={6}>
-                <motion.h2
-                  className={styles.showcase__artist}
-                  key={items[activeIndex].name}
-                  variants={headlineVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                >
-                  {items[activeIndex].name}
-                </motion.h2>
-              </Col>
-            </Row>
-            <Row paddingBottom={1} paddingTop={1} borderTop={1}>
-              <Col md={1}>
-                <Row justifyContent="space-between">
-                  <button
-                    onClick={() => {
-                      setActiveIndex(activeIndex <= 0 ? 0 : activeIndex - 1);
-                    }}
-                  >
-                    Prev
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setActiveIndex(
-                        activeIndex >= items.length - 1
-                          ? items.length - 1
-                          : activeIndex + 1
-                      );
-                    }}
-                  >
-                    Next
-                  </button>
-                </Row>
-              </Col>
-              <Col md={5}>Latests release</Col>
-
-              <Col md={6}>
-                <button>Watch music video</button>
-                <button>View artists page</button>
-              </Col>
-            </Row>
-          </Container>
-        </div>
+        <ShowcaseContent
+          item={items}
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+          latestRelease={albums.length > 0 ? albums[0] : null}
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
+        />
       </AnimatePresence>
     </div>
   );

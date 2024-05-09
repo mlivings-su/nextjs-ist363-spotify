@@ -1,11 +1,13 @@
+import Heading from "../../html/Heading/index";
+import Logo from "../../custom/Logo";
 import styles from "./Header.module.scss";
 
 const Header = () => {
   return (
     <header className={styles.header}>
-      Spotify logo
+      <Logo fill="white" />
       <br />
-      Top 10 artitsts
+      <Heading level={1}>Top 10 artitsts</Heading>
     </header>
   );
 };

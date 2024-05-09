@@ -2,14 +2,16 @@
 @use "../../../sass/abstracts/mixins";
 
 .showcase {
-  background-color: pink;
+  // background-color: pink;
   height: calc(100vh - 5rem);
   //position: relative;
   &__images {
     aspect-ratio: 16/9;
     width: 100vw;
+    height: calc(100vw * (9 / 16));
     background-color: red;
     overflow: hidden;
+    transition: all 1s;
     &__list {
       width: 100%;
       height: 100%;
@@ -27,10 +29,15 @@
         }
       }
     }
+
+    &.expanded {
+      height: 100vh;
+    }
     @include mixins.breakpoint(laptop) {
       width: 60vw;
+      height: calc(60vw * (9 / 16));
       position: absolute;
-      top: 5rem;
+      top: 7rem;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1;
@@ -71,5 +78,17 @@
     @include mixins.breakpoint(laptop) {
       font-size: 6rem;
     }
+  }
+
+  &__latest {
+    background-color: black;
+    padding: 1rem;
+    border: 1px solid white;
+  }
+}
+.album {
+  &__cover {
+    width: 100%;
+    height: auto;
   }
 }

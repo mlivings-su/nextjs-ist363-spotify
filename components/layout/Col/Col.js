@@ -12,6 +12,7 @@ const Col = ({ children, xs, sm, md, lg, xl }) => {
     [`col__md__${md}`]: md,
     [`col__lg__${lg}`]: lg,
     [`col__xl__${xl}`]: xl,
+    [`text-align--${textAlign}`]: textAlign,
   });
   return <div className={colClasses}>{children}</div>;
 };
