@@ -1,6 +1,7 @@
 import classnames from "classnames/bind";
 
 import Image from "next/image";
+
 import styles from "./Showcase.module.scss";
 
 const cx = classnames.bind(styles);

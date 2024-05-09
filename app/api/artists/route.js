@@ -3,8 +3,6 @@ import { getAccessToken } from "../../../lib/spotify";
 export async function GET() {
   const token = await getAccessToken();
 
-  //const taylorSwift = "06HL4z0CvFAxyc27GXpf02";
-
   const artists = [
     {
       name: "Taylor Swift",
@@ -17,6 +15,34 @@ export async function GET() {
     {
       name: "Ariana Grande",
       spotify_id: "66CXWjxzNUsdJxJ2JdwvnR",
+    },
+    {
+      name: "Olivia Rodrigo",
+      spotify_id: "1McMsnEElThX1knmY4oliG",
+    },
+    {
+      name: "Lil Yachty",
+      spotify_id: "6icQOAFXDZKsumw3YXyusw",
+    },
+    {
+      name: "SZA",
+      spotify_id: "7tYKF4w9nC0nq9CsPZTHyP",
+    },
+    {
+      name: "Lauryn Hill",
+      spotify_id: "2Mu5NfyYm8n5iTomuKAEHl",
+    },
+    {
+      name: "Tems",
+      spotify_id: "687cZJR45JO7jhk1LHIbgq",
+    },
+    {
+      name: "Mariah the Scientist",
+      spotify_id: "7HO5fOXE4gh3lzZn64tX2E",
+    },
+    {
+      name: "Mac Miller",
+      spotify_id: "4LLpKhyESsyAXpc4laK94U",
     },
   ];
 

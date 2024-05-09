@@ -4,7 +4,7 @@ import styles from "./Col.module.scss";
 
 const cx = classnames.bind(styles);
 
-const Col = ({ children, xs, sm, md, lg, xl }) => {
+const Col = ({ children, xs, sm, md, lg, xl, textAlign }) => {
   const colClasses = cx({
     col: true,
     [`col__xs__${xs}`]: xs,

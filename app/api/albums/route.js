@@ -1,7 +1,7 @@
 import { getAccessToken } from "../../../lib/spotify";
 
 export async function GET(request) {
-  const urlParams = request.nextURL.searchParams;
+  const urlParams = request.nextUrl.searchParams;
   const id = urlParams.get("id");
 
   const token = await getAccessToken();
@@ -15,7 +15,7 @@ export async function GET(request) {
     }
   );
 
-  const artistsData = await apiResponse.json();
+  const albumsData = await apiResponse.json();
 
   return new Response(JSON.stringify(albumsData));
 }

@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import ButtonUI from "../../html/ButtonUI";
-import Col from "../../layout/Col/Col";
-import Container from "../../layout/Container/Container";
+import Col from "../../layout/Col";
+import Container from "../../layout/Container";
 import Heading from "../../html/Heading";
 import Image from "next/image";
-import Row from "../../layout/Row/Row";
+import Row from "../../layout/Row";
 
 import styles from "./Showcase.module.scss";
 
@@ -16,6 +16,12 @@ const ShowcaseContent = ({
   setActiveIndex,
   setIsExpanded,
 }) => {
+  const sectionVariants = {
+    initial: { opacity: 0, y: -100 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: 100 },
+  };
+
   const headlineVariants = {
     initial: { opacity: 0, x: -100 },
     animate: { opacity: 1, x: 0 },
@@ -28,7 +34,13 @@ const ShowcaseContent = ({
   };
 
   return (
-    <div className={styles.showcase__content}>
+    <motion.div
+      className={styles.showcase__content}
+      variants={sectionVariants}
+      initial="initial"
+      animate={isExpanded ? "exit" : "animate"}
+      exit="exit"
+    >
       <Container>
         <Row alignItems="flex-end" paddingBottom={2}>
           <Col md={1}>
@@ -48,7 +60,7 @@ const ShowcaseContent = ({
             </motion.div>
           </Col>
 
-          <Col xs={9} md={6}>
+          <Col xs={9} md={6} textAlign="right">
             <motion.h2
               variants={headlineVariants}
               initial="initial"
@@ -66,12 +78,14 @@ const ShowcaseContent = ({
             <Row justifyContent="space-between">
               <ButtonUI
                 icon="faAngleLeft"
+                disabled={activeIndex === 0}
                 clickHandler={() => {
                   setActiveIndex(activeIndex <= 0 ? 0 : activeIndex - 1);
                 }}
               />
               <ButtonUI
                 icon="faAngleRight"
+                disabled={activeIndex === items.length - 1}
                 clickHandler={() => {
                   setActiveIndex(
                     activeIndex >= items.length - 1
@@ -119,7 +133,7 @@ const ShowcaseContent = ({
           </Col>
         </Row>
       </Container>
-    </div>
+    </motion.div>
   );
 };
 
