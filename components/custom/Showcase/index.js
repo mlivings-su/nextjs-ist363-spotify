@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
-
 import { AnimatePresence } from "framer-motion";
 import classnames from "classnames/bind";
 
 import ShowcaseContent from "./Content";
 import ShowcaseExpandedContent from "./ExpandedContent";
-import styles from "./Showcase.module.scss";
 import ShowcaseImages from "./Images";
+
+import styles from "./Showcase.module.scss";
 
 const cx = classnames.bind(styles);
 
 const Showcase = ({ items }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [albums, setAlbums] = useState({});
+  const [albums, setAlbums] = useState([]);
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
+    //console.log("use effect for showcase");
     if (items.length > 0) {
       try {
         fetch(`/api/albums?id=${items[activeIndex].id}`)
@@ -29,10 +30,13 @@ const Showcase = ({ items }) => {
     }
   }, [activeIndex, items]);
 
+  console.log({ albums });
+
   const showcaseClasses = cx({
     showcase: true,
     expanded: isExpanded,
   });
+
   return (
     <div className={showcaseClasses}>
       <AnimatePresence>
@@ -41,7 +45,6 @@ const Showcase = ({ items }) => {
           activeIndex={activeIndex}
           isExpanded={isExpanded}
         />
-
         {!isExpanded ? (
           <ShowcaseContent
             items={items}
@@ -63,5 +66,4 @@ const Showcase = ({ items }) => {
     </div>
   );
 };
-
 export default Showcase;
