@@ -12,6 +12,7 @@ import styles from "./Showcase.module.scss";
 const ShowcaseExpandedContent = ({
   activeIndex,
   albums,
+  tracks,
   items,
   setIsExpanded,
 }) => {
@@ -66,6 +67,18 @@ const ShowcaseExpandedContent = ({
             setIsGridVisible(true);
           }}
         />
+
+        <ButtonUI
+          label="View top tracks"
+          icon="faAngleDown"
+          clickHandler={() => {
+            // find the #bottomContent element and scroll to it
+            const slideTarget = document.getElementById("bottomContent");
+            slideTarget.scrollIntoView({ behavior: "smooth" });
+
+            setIsGridVisible(true);
+          }}
+        />
       </motion.div>
       <div
         className={styles.showcase__expanded__content__bottom}
@@ -76,6 +89,13 @@ const ShowcaseExpandedContent = ({
             Albums
           </Heading>
           {isGridVisible && <Grid items={albums} />}
+        </Container>
+
+        <Container>
+          <Heading level={2} marginBottom={2} marginTop={4}>
+            Top Tracks
+          </Heading>
+          {isGridVisible && <Grid items={tracks} />}
         </Container>
       </div>
     </section>
